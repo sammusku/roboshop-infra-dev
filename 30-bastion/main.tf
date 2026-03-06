@@ -8,7 +8,7 @@ resource "aws_instance" "bastion" {
 
     root_block_device {
       volume_size = 50  # Sets the root volume size to 50 GiB
-      volume_type = "gip3"
+      volume_type = "gp3"
       #EBS volume tags
       tags = merge (
         {
