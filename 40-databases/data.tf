@@ -7,7 +7,7 @@ data "aws_ami" "devops" {
         values = ["Redhat-9-DevOps-Practice"]
     }
     filter {
-        name = "visualization_type"
+        name = "virtualization_type"
         values = ["hvm"]
     }
     filter {
