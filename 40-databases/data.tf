@@ -8,7 +8,7 @@ data "aws_ami" "devops" {
     }
     filter {
         name = "visualization_type"
-        values = "hvm"
+        values = ["hvm"]
     }
     filter {
      name = "root_device_type"
