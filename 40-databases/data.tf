@@ -7,11 +7,11 @@ data "aws_ami" "devops" {
         values = ["Redhat-9-DevOps-Practice"]
     }
     filter {
-        name = "virtualization_type"
+        name = "virtualization-type"
         values = ["hvm"]
     }
     filter {
-     name = "root_device_type"
+     name = "root-device-type"
      values = ["ebs"]
 
     }
