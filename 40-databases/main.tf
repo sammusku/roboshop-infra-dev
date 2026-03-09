@@ -99,7 +99,7 @@ resource "terraform_data" "mysql" {
     type = "ssh"
     user = "ec2-user"
     password = "DevOps321"
-    host = "aws_instance.mysql.private_ip"
+    host = aws_instance.mysql.private_ip
   }
   
   provisioner "file" {
