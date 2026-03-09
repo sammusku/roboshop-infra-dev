@@ -106,7 +106,7 @@ resource "terraform_data" "mysql" {
     source = "bootstrap.sh"
     destination = "/tmp/bootstrap.sh"
   }
-  provisioner "remote_exec" {
+  provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap.sh",
       "sudo sh /tmp/bootstrap.sh mysql"
