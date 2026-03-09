@@ -112,5 +112,4 @@ resource "terraform_data" "mysql" {
       "sudo sh /tmp/bootstrap.sh mysql"
     ]
   }
-
-  }
+}
