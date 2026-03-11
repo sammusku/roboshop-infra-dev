@@ -11,7 +11,7 @@ data "aws_ami" "devops" {
  }
  filter {
   name = "root-device-type"
-  values = ["EBS"]
+  values = ["ebs"]
  }
 
 }

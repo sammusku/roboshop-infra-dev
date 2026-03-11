@@ -6,6 +6,6 @@ locals {
     }
     ami_id = data.aws_ami.devops.id
     catalogue_sg_id = data.aws_ssm_parameter.catalogue_sg_id.value
-    private_subnet_ids = split (",", data.aws_ssm_parameter.private_subnet_ids)[0]
+    private_subnet_ids = split (",", data.aws_ssm_parameter.private_subnet_ids.value)[0]
 
 }
