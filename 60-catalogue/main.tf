@@ -7,7 +7,7 @@ resource "aws_instance" "catalogue" {
 
     tags = merge (
     {
-       name = "${var.project}-${var.environment}-catalogue"
+       Name = "${var.project}-${var.environment}-catalogue"
     },
     local.common_tags 
     )
