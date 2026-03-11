@@ -43,6 +43,17 @@ resource "terraform_data" "catalogue" {
   state       = "stopped"
   depends_on = [terraform_data.catalogue]
 }
+resource "aws_ami_from_instance" "catalogue" {
+  name               = "${var.project}-${var.environment}-catalogue"
+  source_instance_id = aws_instance.catalogue.id
+
+  tags = merge (
+    {
+       Name = "${var.project}-${var.environment}-catalogue"
+    },
+    local.common_tags 
+    )
+}
 
 
 
