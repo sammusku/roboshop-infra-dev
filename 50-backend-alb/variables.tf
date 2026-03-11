@@ -1,8 +1,8 @@
 variable "project" {
-    default = roboshop
+    default = "roboshop"
 }
 variable "environment" {
-  default = dev
+  default = "dev"
 }
 variable "zone_id" {
     default = "Z0409414C2FUM7G3IGPP"

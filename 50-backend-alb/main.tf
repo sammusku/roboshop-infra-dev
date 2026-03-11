@@ -23,7 +23,7 @@ resource "aws_lb_listener" "http" {
     type = "fixed-response"
 
     fixed_response {
-      content_type = "text/HTML"
+      content_type = "text/html"
       message_body = "<h1>Hi, I am from HTTP Backend ALB</h1>"
       status_code  = "200"
     }
@@ -34,7 +34,7 @@ resource "aws_route53_record" "www" {
   zone_id = var.zone_id
   name    = "*.backend-alb-${var.environment}.${var.domain_name}"
   type    = "A"
-  ttl     = 1
+  
 
    # load balancer details
   alias {
