@@ -1,7 +1,7 @@
 locals {
     common_tags = {
-        project = "var.project"
-        environment = "var.environment"
+        project = var.project
+        environment = var.environment
         terraform = "true"
     }
     ami_id = data.aws_ami.devops.id
