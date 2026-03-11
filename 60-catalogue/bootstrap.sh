@@ -7,7 +7,7 @@ cd /home/ec2-user
 
 git clone https://github.com/sammusku/ansible-roboshop-roles-tf.git
 
-cd roboshop-roles-tf
+cd ansible-roboshop-roles-tf
 
 dnf install ansible -y
 
