@@ -1,7 +1,7 @@
 #!/bin/bash
 
 component=$1
-env=$2
+environment=$2
 
 cd /home/ec2-user
 
