@@ -5,3 +5,6 @@ variable "project" {
 variable "environment" {
     default = "dev"
  }
+ variable "domain_name" {
+    default = "dev88s.online"
+ }

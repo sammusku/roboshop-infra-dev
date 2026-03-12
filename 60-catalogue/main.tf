@@ -1,7 +1,7 @@
 resource "aws_instance" "catalogue" {
     ami = local.ami_id
     instance_type = "t3.micro"
-    subnet_id = local.private_subnet_ids
+    subnet_id = local.private_subnet_id
     vpc_security_group_ids = [local.catalogue_sg_id]
     
 
@@ -115,7 +115,7 @@ resource "aws_launch_template" "example" {
         local.common_tags
     )
 }
-/* resource "aws_autoscaling_group" "catalogue" {
+resource "aws_autoscaling_group" "catalogue" {
   name                      = "${var.project}-${var.environment}-catalogue"
   max_size                  = 10
   min_size                  = 1
@@ -133,16 +133,78 @@ resource "aws_launch_template" "example" {
   vpc_zone_identifier       = [local.private_subnet_id]
   target_group_arns = [aws_lb_target_group.catalogue.arn]
 
-  tag {
-    key                 = "Name"
-    value               = "${var.project}-${var.environment}-catalogue"
-    propagate_at_launch = true
+    instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50
+    }
+    triggers = ["launch_template"]
   }
-
+ 
+    dynamic "tag" {
+    for_each = merge(
+        {
+            Name = "${var.project}-${var.environment}-catalogue"
+        },
+        local.common_tags
+    )
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true   #all tags dynamically applicable to all ec2 instances created by autoscalling 
+    }
+  }
+  # with in 15min autoscaling should be successful
   timeouts {
     delete = "15m"
-  }*/
+  }
+}
+#Auto Scaling Policy for the Auto Scaling Group.
+#Its job is to automatically increase or decrease the number of EC2 instances based on CPU usage.
 
+resource "aws_autoscaling_policy" "catalogue" {
+  autoscaling_group_name = aws_autoscaling_group.catalogue.name
+   name                   = "${var.project}-${var.environment}-catalogue"
+  policy_type            = "TargetTrackingScaling"
+  estimated_instance_warmup = 120
+
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+
+    target_value = 70.0
+  }
+}
+
+# This depends on target group
+resource "aws_lb_listener_rule" "catalogue" {
+  listener_arn = local.backend_alb_listener_arn
+  priority     = 10
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.catalogue.arn
+  }
+
+  condition {
+    host_header {
+      values = ["catalogue.backend-alb-${var.environment}.${var.domain_name}"]
+    }
+  }
+}
+
+resource "terraform_data" "catalogue_delete" {
+  triggers_replace = [
+    aws_instance.catalogue.id
+  ]
+  depends_on = [aws_autoscaling_policy.catalogue]
+  
+  # it executes in bastion
+  provisioner "local-exec" {
+    command = "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id} "
+  }
+}
 
 
 
