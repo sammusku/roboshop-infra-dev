@@ -8,3 +8,6 @@ variable "environment" {
  variable "domain_name" {
     default = "dev88s.online"
  }
+ variable "app_version" {
+    default ="v3"
+ }
