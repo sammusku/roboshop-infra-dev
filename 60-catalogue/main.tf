@@ -75,7 +75,7 @@ resource "aws_lb_target_group" "catalogue" {
   }
 }
 #create a Launch template to create new instances 
-resource "aws_launch_template" "example" {
+resource "aws_launch_template" "catalogue" {
   name = "${var.project}-${var.environment}-catalogue"
   image_id = aws_ami_from_instance.catalogue.id
   # once autoscaling sees less traffic, it will terminate the instance
