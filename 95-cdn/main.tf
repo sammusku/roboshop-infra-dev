@@ -1,6 +1,6 @@
 resource "aws_cloudfront_distribution" "roboshop" {
   origin {
-    # https://frontend-dev.daws88s.online
+    # https://frontend-dev.dev88s.online
     domain_name              = "frontend-${var.environment}.${var.domain_name}"
     origin_id                = "frontend-${var.environment}.${var.domain_name}"
 
@@ -15,7 +15,7 @@ resource "aws_cloudfront_distribution" "roboshop" {
   enabled             = true
   is_ipv6_enabled     = false
   
-  # CDN URL https://roboshop-dev.daws88s.online
+  # CDN URL https://roboshop-dev.dev88s.online
   aliases = ["${var.project}-${var.environment}.${var.domain_name}"]
 
   default_cache_behavior {
