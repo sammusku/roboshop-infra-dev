@@ -1,4 +1,4 @@
-data "aws_ami" "open" {
+data "aws_ami" "openvpn" {
     most_recent = true
     owners    = ["679593333241"]
     
