@@ -312,6 +312,14 @@ resource "aws_security_group_rule" "openvpn_public_943" {
   cidr_blocks = ["0.0.0.0/0"]
   security_group_id = local.openvpn_sg_id
 }
+resource "aws_security_group_rule" "openvpn_udp_1194" {
+  type              = "ingress"
+  from_port         = 1194
+  to_port           = 1194
+  protocol          = "udp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = local.openvpn_sg_id
+} 
 resource "aws_security_group_rule" "backend_alb_openvpn" {
  type              = "ingress"
   from_port         = 80
@@ -320,4 +328,13 @@ resource "aws_security_group_rule" "backend_alb_openvpn" {
   # Where traffic is coming from
   source_security_group_id = local.openvpn_sg_id
   security_group_id = local.backend_alb_sg_id
+}
+resource "aws_security_group_rule" "bastion_openvpn" {
+ type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  # Where traffic is coming from
+  source_security_group_id = local.openvpn_sg_id
+  security_group_id = local.bastion_sg_id
 }
